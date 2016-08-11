@@ -2,10 +2,8 @@
 
 return array(
 
-    'DB_HOST' => '',
-    'DB_NAME' => '',
-    'DB_USER' => '',
-    'DB_PASS' => '',
-
-    'USER_PASS' => '',
+    'DB_HOST' => '127.0.0.1',
+    'DB_NAME' => 'fantasy_db',
+    'DB_USER' => 'fantasy_admin',
+    'DB_PASS' => 'adminpass'
 );

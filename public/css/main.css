@@ -301,5 +301,10 @@ tbody tr:nth-of-type(odd) {
 	background-color: #f7f8f9;
 }
 
+/*Images*/
+img.productThumb {
+	width: 60px;
+}
+
 /*	blue color: #0073a6;*/
 /*red color: #e31936*/

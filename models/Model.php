@@ -1,6 +1,6 @@
 <?php
 
-$_ENV = include __DIR__ . '/../.env.php';
+$_ENV = include __DIR__ . '/../env.php';
 
 class Model {
 
@@ -69,13 +69,12 @@ class Model {
      */
     public function save()
     {
-
         //Ensure there are attributes before attempting to save
         //Perform the proper action - if the `id` is set, this is an update, if not it is a insert
-        if ( ! empty( $this->attributes ) && isset( $this->attributes['id'] ) )
+        if ( ! empty( $this->attributes ) && isset( $this->attributes['user_id'] ) )
         {
 
-            $this->update( $this->attributes['id'] );
+            $this->update( $this->attributes['user_id'] );
         }
         else
         {

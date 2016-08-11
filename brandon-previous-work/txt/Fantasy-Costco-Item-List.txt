@@ -28,11 +28,11 @@ PRICE:150 GP
 IMG:
 NAME:Tankard of Potent Drink
 DESCRIPTION:A big tankard with pictures of spudz  on it. Makes alcoholic beverages more alcoholic. Drinking water from this tankard makes you instantly sober; if sober it can cure a hangover.
-PPRICE:
+PPRICE:100 GP
 IMG:
 NAME:Glasses of Lightning Comprehension
 DESCRIPTION: A set of glasses with a whole bunch of lenses on them.Allows you to read and understand any language you know ten times as fast.
-PRICE:
+PRICE:100 GP
 IMG:
 NAME:Lens of Straight Creepin’
 DESCRIPTION: Glasses that make it look like your eyes are closed. Allows you to find footprints, tracks, or markings of anything that traveled through the air once per day.
@@ -55,7 +55,8 @@ DESCRIPTION:Has seen some shit, but seems to be radiating with vital energies. G
 PRICE:400GP
 IMG:
 NAME:Virtuoso’s Mask
-DESCRIPTION:Allows you to cast Disguse Self as a Cantrip instead of a 1st Level Spell. PRICE:1100 GP
+DESCRIPTION:Allows you to cast Disguse Self as a Cantrip instead of a 1st Level Spell.
+PRICE:1100 GP
 IMG:
 NAME:Throwing Shield
 DESCRIPTION:Confers the same AC bonus as a regular shield, and can be used as a thrown weapon. Can travel IN A STRAIGHT LINE up to 30 feet, and deals 1d8 + STR/Prof. Damage. IT DOESN’T COME BACK TO YOU AFTERWARDS. AND DON’T TRY TO RICOCHET THIS SHIT
@@ -79,6 +80,7 @@ IMG:
 NAME:The Anti Gravity Sphere
 DESCRIPTION:A small fist-sized glass ball filled with a silvery smoke. When the sphere is destroyed, it disables the effect of gravity on everything in a 30ft radius.
 PRICE:500 GP
+IMG:
 NAME:The Glutton’s Fork
 DESCRIPTION:Once a day this fork will allow the user to eat any non-magical item they can fit in their mouth and gain 2d6 points of health. Just tap the fork on the item and it will turn edible.
 PRICE:750 GP
@@ -99,7 +101,8 @@ NAME:Plastic Sheriff Badge
 DESCRIPTION:Adds +3 to bluff checks when impersonating a person of authority.
 PRICE:500 GP
 IMG:
-NAME:Flaming Poisoning Raging Sword of Doom - DESCRIPTION:A sword with a gigantic blade, wreathed in flames and with a crooked, oozing scorpion’s stinger affixed to its point. Deals an extra 20 melee damage.
+NAME:Flaming Poisoning Raging Sword of Doom
+DESCRIPTION:A sword with a gigantic blade, wreathed in flames and with a crooked, oozing scorpion’s stinger affixed to its point. Deals an extra 20 melee damage.
 PRICE:60000 GP
 IMG:
 NAME:No-Sodium Salt Shaker

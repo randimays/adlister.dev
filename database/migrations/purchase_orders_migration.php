@@ -1,6 +1,5 @@
 <?php
 
-// $_ENV = include __DIR__ . '/../../.env.php';
 require __DIR__ . '/../db_connect.php';
 
 $dbc->exec('DROP TABLE IF EXISTS purchase_orders');

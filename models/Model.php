@@ -1,251 +1,212 @@
 <?php
 
-$_ENV = include __DIR__ . '/../.env.php';
+$_ENV = include __DIR__ . '/../env.php';
 
 class Model {
 
-    protected static $dbc;
-    protected static $table;
+	protected static $dbc;
+	protected static $table;
 
-    public $attributes = array();
+	public $attributes = array();
 
+	public function __construct() {
 
-    /*
-     * opens db connection
-     */
-    public function __construct()
-    {
+		self::dbConnect();
+	}
 
-        self::dbConnect();
-    }
+	public function __get($key) {
+		return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : null;
+	}
 
+	public function __set($name, $value) {
+		$this->attributes[$name] = $value;
+	}
 
-    /*
-     * Get a value from attributes based on name
-     */
-    public function __get($name)
-    {
-        // Return the value from attributes with a matching $name, if it exists
-        if ( array_key_exists( $name, $this->attributes ) )
-        {
+	protected static function dbConnect() {
+		if (!self::$dbc) {
+			require_once __DIR__ . '/../database/db_connect.php';
+			self::$dbc = $dbc;
+		}
+	}
 
-            return $this->attributes[ $name ];
-        }
+	public function save() {
 
-        return null;
-    }
+		//Ensure there are attributes before attempting to save
+		//Perform the proper action - if the `id` is set, this is an update, if not it is a insert
+		if ( ! empty( $this->attributes ) && isset( $this->attributes['id'] ) )
+		{
 
+			$this->update( $this->attributes['id'] );
+		}
+		else
+		{
 
-    /*
-     * Set a new attribute for the object
-     */
-    public function __set($name, $value)
-    {
+			$this->insert();
+		}
+	}
 
-        // Store name/value pair in attributes array
-        $this->attributes[ $name ] = $value;
-    }
+	// deletes object from db
+	public function delete()
+	{
 
+		$query = 'DELETE FROM ' . static::$table . ' WHERE id = :id';
 
-    /*
-     * Connect to the DB
-     */
-    protected static function dbConnect()
-    {
+		$stmt = self::$dbc->prepare($query);
+		$stmt->bindValue(':id', $this->attributes['id'], PDO::PARAM_INT);
+		$stmt->execute();
+	}
 
-        if ( ! self::$dbc )
-        {
+	// creates new entry in db
+	protected function insert()
+	{
 
-            //Connect to database
-            require_once __DIR__ . '/../database/db_connect.php';
+		//After insert, add the id back to the attributes array so the object can properly reflect the id
+		//Iterate through all the attributes to build the prepared query
+		//Use prepared statements to ensure data security
+		$columns = '';
+		$value_placeholders = '';
 
-            self::$dbc = $dbc;
-        }
-    }
+		foreach ($this->attributes as $column => $value)
+		{
 
+			if ( $columns == '' && $value_placeholders == '')
+			{
 
-    /*
-     * Persist the object to the database
-     */
-    public function save()
-    {
+				$columns .= $column;
+				$value_placeholders .= ':' . $column;
+			}
+			else
+			{
 
-        //Ensure there are attributes before attempting to save
-        //Perform the proper action - if the `id` is set, this is an update, if not it is a insert
-        if ( ! empty( $this->attributes ) && isset( $this->attributes['id'] ) )
-        {
+				$columns .= ', ' . $column;
+				$value_placeholders .= ', :' . $column;
+			}
+		}
 
-            $this->update( $this->attributes['id'] );
-        }
-        else
-        {
+		$query = "INSERT INTO " . static::$table . " ({$columns}) VALUES ({$value_placeholders})";
 
-            $this->insert();
-        }
-    }
+		$stmt = self::$dbc->prepare($query);
 
-    // deletes object from db
-    public function delete()
-    {
+		foreach ($this->attributes as $column => $value) {
+			$stmt->bindValue(':' . $column, $value, PDO::PARAM_STR);
+		}
 
-        $query = 'DELETE FROM ' . static::$table . ' WHERE id = :id';
+		$stmt->execute();
 
-        $stmt = self::$dbc->prepare($query);
-        $stmt->bindValue(':id', $this->attributes['id'], PDO::PARAM_INT);
-        $stmt->execute();
-    }
+		$this->attributes['id'] = self::$dbc->lastInsertId();
+	}
 
-    // creates new entry in db
-    protected function insert()
-    {
+	// updates existing entry in db
+	protected function update($id)
+	{
 
-        //After insert, add the id back to the attributes array so the object can properly reflect the id
-        //Iterate through all the attributes to build the prepared query
-        //Use prepared statements to ensure data security
-        $columns = '';
-        $value_placeholders = '';
+		//Ensure that update is properly handled with the id key
+		//You will need to iterate through all the attributes to build the prepared query
+		//Use prepared statements to ensure data security
+		$query = "UPDATE " . static::$table . " SET ";
+		$first_value = true;
 
-        foreach ($this->attributes as $column => $value)
-        {
+		foreach ($this->attributes as $key => $value)
+		{
 
-            if ( $columns == '' && $value_placeholders == '')
-            {
+			if ( $key == 'id')
+			{
 
-                $columns .= $column;
-                $value_placeholders .= ':' . $column;
-            }
-            else
-            {
+				continue;
+			}
 
-                $columns .= ', ' . $column;
-                $value_placeholders .= ', :' . $column;
-            }
-        }
+			if ( $first_value )
+			{
 
-        $query = "INSERT INTO " . static::$table . " ({$columns}) VALUES ({$value_placeholders})";
+				$first_value = false;
+				$query .= $key . ' = :' . $key;
+			}
+			else
+			{
 
-        $stmt = self::$dbc->prepare($query);
+				$query .= ', ' . $key . ' = :' . $key;
+			}
+		}
 
-        foreach ($this->attributes as $column => $value) {
-            $stmt->bindValue(':' . $column, $value, PDO::PARAM_STR);
-        }
+		$query .= ' WHERE id = :id';
 
-        $stmt->execute();
+		$stmt = self::$dbc->prepare($query);
 
-        $this->attributes['id'] = self::$dbc->lastInsertId();
-    }
+		foreach ($this->attributes as $key => $value)
+		{
 
-    // updates existing entry in db
-    protected function update($id)
-    {
+			$stmt->bindValue(':' . $key, $value, PDO::PARAM_STR);
+		}
 
-        //Ensure that update is properly handled with the id key
-        //You will need to iterate through all the attributes to build the prepared query
-        //Use prepared statements to ensure data security
-        $query = "UPDATE " . static::$table . " SET ";
-        $first_value = true;
+		$stmt->execute();
+	}
 
-        foreach ($this->attributes as $key => $value)
-        {
 
-            if ( $key == 'id')
-            {
+	/*
+	 * Find a record based on an id
+	 */
+	public static function find($id)
+	{
 
-                continue;
-            }
+		// Get connection to the database
+		self::dbConnect();
 
-            if ( $first_value )
-            {
+		//Create select statement using prepared statements
+		$query = 'SELECT * FROM ' . static::$table . ' WHERE id = :id';
 
-                $first_value = false;
-                $query .= $key . ' = :' . $key;
-            }
-            else
-            {
+		$stmt = self::$dbc->prepare($query);
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+		$stmt->execute();
 
-                $query .= ', ' . $key . ' = :' . $key;
-            }
-        }
+		//Store the resultset in a variable named $result
+		$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $query .= ' WHERE id = :id';
+		// The following code will set the attributes on the calling object based on the result variable's contents
 
-        $stmt = self::$dbc->prepare($query);
+		$instance = null;
 
-        foreach ($this->attributes as $key => $value)
-        {
+		if ( $result )
+		{
 
-            $stmt->bindValue(':' . $key, $value, PDO::PARAM_STR);
-        }
+			$instance = new static;
+			$instance->attributes = $result;
+		}
 
-        $stmt->execute();
-    }
+		return $instance;
+	}
 
 
-    /*
-     * Find a record based on an id
-     */
-    public static function find($id)
-    {
+	/*
+	 * Find all records in a table
+	 */
+	public static function all()
+	{
 
-        // Get connection to the database
-        self::dbConnect();
+		self::dbConnect();
 
-        //Create select statement using prepared statements
-        $query = 'SELECT * FROM ' . static::$table . ' WHERE id = :id';
+		//Learning from the previous method, return all the matching records
+		//Create select statement using prepared statements
+		$query = 'SELECT * FROM ' . static::$table;
 
-        $stmt = self::$dbc->prepare($query);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
+		$stmt = self::$dbc->prepare($query);
+		$stmt->execute();
 
-        //Store the resultset in a variable named $result
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+		//Store the resultset in a variable named $result
+		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // The following code will set the attributes on the calling object based on the result variable's contents
+		// The following code will set the attributes on the calling object based on the result variable's contents
 
-        $instance = null;
+		$instance = null;
 
-        if ( $result )
-        {
+		if ( $results )
+		{
 
-            $instance = new static;
-            $instance->attributes = $result;
-        }
+			$instance = new static;
+			$instance->attributes = $results;
+		}
 
-        return $instance;
-    }
-
-
-    /*
-     * Find all records in a table
-     */
-    public static function all()
-    {
-
-        self::dbConnect();
-
-        //Learning from the previous method, return all the matching records
-        //Create select statement using prepared statements
-        $query = 'SELECT * FROM ' . static::$table;
-
-        $stmt = self::$dbc->prepare($query);
-        $stmt->execute();
-
-        //Store the resultset in a variable named $result
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // The following code will set the attributes on the calling object based on the result variable's contents
-
-        $instance = null;
-
-        if ( $results )
-        {
-
-            $instance = new static;
-            $instance->attributes = $results;
-        }
-
-        return $instance;
-    }
+		return $instance;
+	}
 
 }
 

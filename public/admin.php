@@ -2,13 +2,19 @@
 
 session_start();
 
+require_once __DIR__ . '/../Models/Item.php'; 
+
 function pageController() {
 	$pageTitle = "FANTASY COSTCO: WHERE ALL YOUR DREAMS COME TRUE";
+	$items = Item::all();
+	// var_dump($items);
 
 	return [
-		"pageTitle" => $pageTitle
+		"pageTitle" => $pageTitle,
+		"items" => $items
 	];
 }
+extract(pageController());
 
 ?>
 
@@ -21,54 +27,7 @@ function pageController() {
 	<?php require '../views/partials/navbar.php'; ?>
 
 	<div class="container">
-		<table>
-			<thead>
-				<tr>
-					<th>Heading</th>
-					<th>Heading</th>
-					<th>Heading</th>
-					<th>Heading</th>
-					<th>Heading</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-				</tr>				
-				<tr>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-				</tr>				
-				<tr>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-				</tr>				
-				<tr>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-				</tr>				
-				<tr>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-					<td>Content</td>
-				</tr>
-			</tbody>
-		</table>
+		<?php include __DIR__ . "/../views/partials/admin.manage-items.phtml" ?>
 	</div>
 
 	<?php require '../views/partials/common_js.php'; ?>

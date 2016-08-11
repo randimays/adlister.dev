@@ -72,6 +72,7 @@ class Model {
 			if ( $columns == '' && $value_placeholders == '')
 			{
 
+<<<<<<< HEAD
 				$columns .= $column;
 				$value_placeholders .= ':' . $column;
 			}
@@ -84,6 +85,22 @@ class Model {
 		}
 
 		$query = "INSERT INTO " . static::$table . " ({$columns}) VALUES ({$value_placeholders})";
+=======
+    /*
+     * Persist the object to the database
+     */
+    public function save()
+    {
+        //Ensure there are attributes before attempting to save
+        //Perform the proper action - if the `id` is set, this is an update, if not it is a insert
+        if ( ! empty( $this->attributes ) && isset( $this->attributes['user_id'] ) )
+        {
+
+            $this->update( $this->attributes['user_id'] );
+        }
+        else
+        {
+>>>>>>> 0da0238d19755d30cb2bd96c0caa6541a1918fd9
 
 		$stmt = self::$dbc->prepare($query);
 

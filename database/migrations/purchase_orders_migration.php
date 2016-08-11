@@ -11,7 +11,7 @@ $query = 'CREATE TABLE purchase_orders (
     qty INT NOT NULL,
     purchase_date DATETIME NOT NULL,
     PRIMARY KEY (po_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
 )';
 
 $dbc->exec($query);

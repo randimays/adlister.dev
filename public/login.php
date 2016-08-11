@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="../css/4cols.css" media="screen" type="text/css">
   </head>
 
-
   <body>
     <div class="main_container_wrapper">
       <div class="sign_in" id="main_content">

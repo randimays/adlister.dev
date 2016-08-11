@@ -1,16 +1,18 @@
 body {
 	margin: 0;
 	font-family: 'Fira Sans', sans-serif;
+	color: #333132;
 }
 
 /*Header & Navigation*/
 
 header {
-	height: 120px;
+	height: 160px;
 	display: block;
 	flex-direction: row;
 	background-color: #efefef;
 	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
+	margin-bottom: 50px;
 }
 
 #links-bar {
@@ -28,6 +30,8 @@ header {
 	width: 100%;
 	padding-bottom: 15px;
 }
+
+/*Logo*/
 
 #logo-div-top {
 	display: none;
@@ -48,8 +52,18 @@ header {
 	float: right;
 }
 
+/*Search Bar*/
+
 #small-search {
 	display: none;
+}
+
+#search-div {
+	width: 100%;
+	height: 30px;
+	background-color: #3071a9;
+	padding: 5px;
+	color: white;
 }
 
 #search-bar-div {
@@ -76,21 +90,13 @@ header {
 
 #search-icon {
 	position: relative;
-	width: 25px;
+	width: 20px;
 	z-index: 1;
 	float: right;
-	bottom: -8px;
-	right: 0px
+	bottom: -12px;
+	right: 0px;
 }
 
-#large-content-menu {
-	display: inline;
-	position: relative;
-	width: 30%;
-	height: 80px;
-	float: left;
-	min-width: 305px
-}
 
 #sign-in-div {
 	display: inline;
@@ -99,14 +105,16 @@ header {
 	height: 32px;
 	float: left;
 	top: 40px;
-	border-right: 1px solid #3071a9
+	border-right: 1px solid #3071a9;
 }
 
 #sign-in-span {
-	font-size: 1.2rem;
+	font-size: 1.2em;
 	float: right;
-	padding: 0px 15px 15px 0px
+	padding: 0px 15px 15px 0px;
 }
+
+/*Cart Icon*/
 
 #cart-div {
 	display: inline;
@@ -114,14 +122,14 @@ header {
 	width: 33.33%;
 	height: 32px;
 	top: 40px;
-	min-width: 101px
+	min-width: 101px;
 }
 
 #cart-span {
 	position: relative;
 	font-size: 1.2rem;
 	float: right;
-	padding: 0px 15px 15px 0px
+	padding: 0px 15px 15px 0px;
 
 }
 
@@ -132,18 +140,28 @@ header {
 	top: 0px;
 }
 
-#search-div {
-	width: 100%;
-	height: 30px;
-	background-color: #3071a9;
-	padding: 5px;
-	color: white;
-}
+/*Blue Subnav (List & Option)*/
 
 #list-icon {
 	width: 20px;
 	padding: 5px;
 	float: left;
+}
+
+.option {
+	padding: 5px 10px 5px 0;
+	float: left;
+}
+
+/*Responsive Menu Properties*/
+
+#large-content-menu {
+	display: inline;
+	position: relative;
+	width: 30%;
+	height: 80px;
+	float: left;
+	min-width: 305px
 }
 
 #medium-content-menu {
@@ -153,10 +171,6 @@ header {
 	float: left;
 	min-width: 305px;
 	display: none;
-}
-.option{
-	padding: 5px 10px 5px 0;
-	float: left;
 }
 
 @media(max-width:1030px) {
@@ -228,6 +242,13 @@ header {
 	}
 }
 
+/*Page Structure*/
+
+.container {
+	margin: auto;
+	width: 70%;
+}
+
 .col-1 {width:8.33%; float:left; padding:15px;}
 .col-2 {width:16.66%; float:left; padding:15px;}
 .col-3 {width:25%; float:left; padding:15px;}
@@ -241,6 +262,44 @@ header {
 .col-11 {width:91.66%; float:left; padding:15px;}
 .col-12 {width:100%; float:left; padding:15px; clear:both;}
 
+/*Header Tags*/
+h1 {
+	font-size: 1.75em;
+	text-align: center;
+	font-weight: 500;
+	margin-bottom: 30px;
+}
+
+/*Tables*/
+table {
+	width: 100%;
+	border: 1px solid #ddd;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-collapse: collapse;
+}
+
+th {
+	font-weight: 500;
+	text-transform: uppercase;
+	font-size: 1em;
+	text-align: center;
+	padding: 12px;
+}
+
+td {
+	font-weight: 400;
+	font-size: .95em;
+	padding: 12px;
+}
+
+th, td {
+	border: 1px solid #efefef;
+}
+
+tbody tr:nth-of-type(odd) {
+	background-color: #f7f8f9;
+}
 
 /*	blue color: #0073a6;*/
 /*red color: #e31936*/

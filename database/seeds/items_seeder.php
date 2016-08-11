@@ -27,7 +27,7 @@ foreach($itemInventory as $key=>$value){
 			$description=$value['description'];
 			$insert->bindValue(':name',$value['name'],PDO::PARAM_STR);
 			$insert->bindValue(':price',(int)$value['price'],PDO::PARAM_INT);
-			$insert->bindValue(':imgpath',$value['imgpath'],PDO::PARAM_STR);
+			$insert->bindValue(':imgpath','/img/' . $key . '.png',PDO::PARAM_STR);
 			$insert->bindValue(':description',$value['description'],PDO::PARAM_STR);
 			$insert->execute();
 		}

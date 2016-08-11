@@ -1,7 +1,7 @@
 <?php
 
-$_ENV = include __DIR__ . '/../../.env.php';
-require_once '../db_connect.php';
+$_ENV = include __DIR__ . '/../../env.php';
+require_once __DIR__ . '/../db_connect.php';
 
 $dbc->exec('DROP TABLE IF EXISTS users');
 
@@ -13,7 +13,7 @@ $query = 'CREATE TABLE users (
     email VARCHAR(100) NOT NULL,
     username VARCHAR(32) NOT NULL,
     password VARCHAR(64) NOT NULL,
-    admin TINYINT NOT NULL,
+    admin TINYINT(1) NOT NULL,
     PRIMARY KEY (user_id)
 )';
 

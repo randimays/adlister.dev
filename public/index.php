@@ -21,7 +21,8 @@ function pageController() {
 </head>
 <body>
     <?php require '../views/partials/navbar.php'; ?>
-
+    <?php require '../views/partials/table.php'; ?>
+    <?=$body?>
     <?php require '../views/partials/common_js.php'; ?>
 </body>
 </html>

@@ -39,7 +39,7 @@ class Model {
 		$columns = '';
 		$value_placeholders = '';
 
-		foreach ($this->attributes as $column => $value) {	
+		foreach ($this->attributes as $column => $value) {
 			if ($columns == '' && $value_placeholders == '') {
 				$columns .= $column;
 				$value_placeholders .= ':' . $column;
@@ -57,7 +57,7 @@ class Model {
             $this->update($this->attributes['user_id']);
         } else {
 			$stmt = self::$dbc->prepare($query);
-			
+
 			foreach ($this->attributes as $column => $value) {
 				$stmt->bindValue(':' . $column, $value, PDO::PARAM_STR);
 			}
